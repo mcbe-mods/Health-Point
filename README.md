@@ -10,7 +10,7 @@ Display the health status of the entity
 
 > required enable Beta API
 
-To download, you need to go to the GitHub repository [releases](https://github.com/Lete114/minecraft-BE-Cut-tree-one-click/releases)
+To download, you need to go to the GitHub repository [releases](https://github.com/mcbe-mods/Healh-Bar/releases)
 
 ## Debugger
 
