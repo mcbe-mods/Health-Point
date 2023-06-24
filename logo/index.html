@@ -1,0 +1,60 @@
+<style>
+  @font-face {
+    font-family: 'minecraft';
+    src: url(./minecraft.ttf);
+  }
+  * {
+    padding: 0;
+    margin: 0;
+    font-family: minecraft;
+  }
+
+  body {
+    width: 100%;
+    background-color: #00c4b6;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .title {
+    text-align: center;
+    color: #fff;
+
+    width: 100%;
+
+    font-size: 80;
+    z-index: 100;
+    text-shadow: 1px 1px #006b64, 2px 2px #006b64, 3px 3px #006b64, 4px 4px #006b64, 5px 5px #006b64,
+      20px 20px 16px #000;
+  }
+  .imgs {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+  }
+
+  .bars {
+    margin-left: 40px;
+    display: flex;
+    flex-direction: column;
+  }
+</style>
+
+<div class="container">
+  <div class="title">Healh Bar</div>
+  <div class="imgs">
+    <img src="./sheep.png" class="sheep" />
+    <div class="bars">
+      <img src="./health.png" class="health" />
+      <img src="./bruise.png" class="bruise" />
+    </div>
+  </div>
+</div>
