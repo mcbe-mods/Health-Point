@@ -30,6 +30,8 @@ function showHealth(player, entity) {
 
   const health = entity.getComponent('health')
 
+  if (!health?.value) return
+
   /** @type {number} */
   const maxHealth = health.value
   /** @type {number} */
