@@ -1,6 +1,6 @@
 # Hit Point
 
-Display the health status of the entity
+Show entity life value
 
 <p align="center">
 <img src="pack_icon.png" style="width: 80%;">
@@ -13,8 +13,6 @@ To download, you need to go to the GitHub repository [releases](https://github.c
 ## Usage
 
 > required enable Beta API
-
-Alignment Biology
 
 ![](screens/1.png)
 
