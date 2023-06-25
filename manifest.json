@@ -1,10 +1,10 @@
 {
   "format_version": 2,
   "header": {
-    "description": "Made By: Lete114\nGithub: Lete114\nRepo: https://github.com/mcbe-mods/Healh-Bar",
-    "name": "Healh Bar",
+    "description": "Made By: Lete114\nGithub: Lete114\nRepo: https://github.com/mcbe-mods/Hit-Point",
+    "name": "Hit Point",
     "uuid": "678ac6dc-1167-49cf-b8b2-78a941e986ec",
-    "version": [0, 0, 1],
+    "version": [0, 0, 2],
     "min_engine_version": [1, 20, 0]
   },
   "modules": [
@@ -13,8 +13,8 @@
       "language": "javascript",
       "type": "script",
       "uuid": "cbb41902-87d3-4fd4-b365-92fe268dd0c2",
-      "version": [0, 0, 1],
-      "entry": "scripts/healhBar.js"
+      "version": [0, 0, 2],
+      "entry": "scripts/main.js"
     }
   ],
   "dependencies": [

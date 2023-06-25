@@ -1,4 +1,4 @@
-# Healh Bar
+# Hit Point
 
 Display the health status of the entity
 
@@ -8,9 +8,21 @@ Display the health status of the entity
 
 ## Download
 
+To download, you need to go to the GitHub repository [releases](https://github.com/mcbe-mods/Hit-Point/releases)
+
+## Usage
+
 > required enable Beta API
 
-To download, you need to go to the GitHub repository [releases](https://github.com/mcbe-mods/Healh-Bar/releases)
+Alignment Biology
+
+![](screens/1.png)
+
+You can toggle the display by typing `#PH#` in the chat box (case-insensitive with `#ph#` is fine), Each player's display is independent, so that all players will not switch because other players have switched their displays.
+
+![](screens/2.png)
+
+
 
 ## Debugger
 
