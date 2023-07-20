@@ -28,8 +28,8 @@ world.beforeEvents.chatSend.subscribe(async (e) => {
 system.runInterval(() => {
   world.getAllPlayers().forEach((player) => {
     const entities = player.getEntitiesFromViewDirection()
-    entities.forEach((entity) => {
-      showHealth(player, entity)
+    entities.forEach((entityRaycastHit) => {
+      showHealth(player, entityRaycastHit.entity)
     })
   })
 })
@@ -47,12 +47,12 @@ function showHealth(player, entity) {
   try {
     const health = entity.getComponent('health')
 
-    if (!health?.value) return
+    if (!health?.defaultValue) return
 
     /** @type {number} */
-    const maxHealth = health.value
+    const maxHealth = health.defaultValue
     /** @type {number} */
-    const currentHealth = health.current
+    const currentHealth = health.currentValue
 
     const togglePHType = player.getDynamicProperty(PH)
     const PHBar = togglePHType ? `§a${maxHealth} §r/ §c${currentHealth}` : getHeartBar(maxHealth, currentHealth)
@@ -60,6 +60,8 @@ function showHealth(player, entity) {
     player.onScreenDisplay.setActionBar(PHBar)
   } catch (error) {
     console.log(error)
+    console.log(error.message)
+    console.log(error.stack)
   }
 }
 
