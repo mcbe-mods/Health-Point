@@ -57,11 +57,10 @@ function showHealth(player: Player, entity: Entity) {
     const currentHealth = Math.floor(health.currentValue)
 
     const togglePHType = player.getDynamicProperty(PH)
-    const PHBar = togglePHType
-      ? `${color.green(maxHealth + '')}${color.reset('')} / ${color.red(currentHealth + '')}`
-      : getHeartBar(maxHealth, currentHealth)
+    const PHNumber = `${color.green(maxHealth + '')}${color.reset('')} / ${color.red(currentHealth + '')}`
+    const PHBar = togglePHType ? PHNumber : getHeartBar(maxHealth, currentHealth)
 
-    player.onScreenDisplay.setActionBar(PHBar)
+    player.onScreenDisplay.setActionBar(maxHealth > 100 ? PHNumber : PHBar)
   } catch (error) {
     /* eslint-disable no-console , @typescript-eslint/no-explicit-any*/
     console.log(error)
