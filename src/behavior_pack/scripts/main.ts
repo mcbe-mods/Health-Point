@@ -5,7 +5,9 @@
  * @license GPL-2.0
  */
 
-import { world, system, Player, Entity, DynamicPropertiesDefinition, MinecraftEntityTypes } from '@minecraft/server'
+import { world, system, DynamicPropertiesDefinition, MinecraftEntityTypes, Entity } from '@minecraft/server'
+import type { EntityHealthComponent, Player } from '@minecraft/server'
+import { color } from '@mcbe-mods/utils'
 
 const PH = 'Hit Point'
 
@@ -35,7 +37,7 @@ system.runInterval(() => {
 })
 
 world.afterEvents.entityHurt.subscribe((e) => {
-  showHealth(e.damageSource.damagingEntity, e.hurtEntity)
+  showHealth(e.damageSource.damagingEntity as Player, e.hurtEntity)
 })
 
 /**
@@ -43,25 +45,29 @@ world.afterEvents.entityHurt.subscribe((e) => {
  * @param {Player} player
  * @param {Entity} entity
  */
-function showHealth(player, entity) {
+function showHealth(player: Player, entity: Entity) {
   try {
-    const health = entity.getComponent('health')
+    const health = entity.getComponent('health') as EntityHealthComponent
 
-    if (!health?.defaultValue) return
+    if (!health?.effectiveMax) return
 
     /** @type {number} */
-    const maxHealth = health.defaultValue
+    const maxHealth = Math.floor(health.effectiveMax)
     /** @type {number} */
-    const currentHealth = health.currentValue
+    const currentHealth = Math.floor(health.currentValue)
 
     const togglePHType = player.getDynamicProperty(PH)
-    const PHBar = togglePHType ? `§a${maxHealth} §r/ §c${currentHealth}` : getHeartBar(maxHealth, currentHealth)
+    const PHBar = togglePHType
+      ? `${color.green(maxHealth + '')}${color.reset('')} / ${color.red(currentHealth + '')}`
+      : getHeartBar(maxHealth, currentHealth)
 
     player.onScreenDisplay.setActionBar(PHBar)
   } catch (error) {
+    /* eslint-disable no-console , @typescript-eslint/no-explicit-any*/
     console.log(error)
-    console.log(error.message)
-    console.log(error.stack)
+    console.log((error as any).message)
+    console.log((error as any).stack)
+    /* eslint-enable */
   }
 }
 
@@ -71,12 +77,11 @@ function showHealth(player, entity) {
  * @param {number} currentHealth
  * @returns
  */
-function getHeartBar(maxHealth, currentHealth) {
+function getHeartBar(maxHealth: number, currentHealth: number) {
   const heart = '\u2764'
-  const color = ['§c', '§8']
 
-  const currentHeart = color[0] + heart.repeat(currentHealth)
-  const injured = color[1] + heart.repeat(maxHealth - currentHealth)
+  const currentHeart = color.red(heart.repeat(currentHealth))
+  const injured = color.darkGray(heart.repeat(maxHealth - currentHealth))
   const text = currentHeart + injured
 
   let result = '',
@@ -97,6 +102,5 @@ function getHeartBar(maxHealth, currentHealth) {
       result += _tmp
     }
   }
-  const reg = new RegExp(color[1] + '$', 'g')
-  return '§c' + result.replace(reg, '').trim()
+  return result.trim()
 }

@@ -14,11 +14,11 @@ To download, you need to go to the GitHub repository [releases](https://github.c
 
 > required enable Beta API
 
-![](screens/1.png)
+![](images/1.png)
 
 You can toggle the display by typing `#PH#` in the chat box (case-insensitive with `#ph#` is fine), Each player's display is independent, so that all players will not switch because other players have switched their displays.
 
-![](screens/2.png)
+![](images/2.png)
 
 
 
