@@ -102,5 +102,6 @@ function getHeartBar(maxHealth: number, currentHealth: number) {
       result += _tmp
     }
   }
-  return result.trim()
+  const reg = new RegExp(`${color.darkGray('')}$`)
+  return result.replace(reg, '').trim()
 }
