@@ -1,14 +1,14 @@
-# Hit Point
+# Health Point
 
 Show entity life value
 
 <p align="center">
-<img src="pack_icon.png" style="width: 80%;">
+  <img src="src/behavior_pack/pack_icon.png" style="width: 80%;">
 </p>
 
 ## Download
 
-To download, you need to go to the GitHub repository [releases](https://github.com/mcbe-mods/Hit-Point/releases)
+To download, you need to go to the GitHub repository [releases](https://github.com/mcbe-mods/Health-Point/releases)
 
 ## Usage
 
@@ -19,8 +19,6 @@ To download, you need to go to the GitHub repository [releases](https://github.c
 You can toggle the display by typing `#PH#` in the chat box (case-insensitive with `#ph#` is fine), Each player's display is independent, so that all players will not switch because other players have switched their displays.
 
 ![](images/2.png)
-
-
 
 ## Debugger
 
