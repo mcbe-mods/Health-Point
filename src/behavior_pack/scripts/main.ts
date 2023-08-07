@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  *
  * @author Lete114
@@ -7,7 +8,7 @@
 
 import { world, system, DynamicPropertiesDefinition, MinecraftEntityTypes, Entity } from '@minecraft/server'
 import type { EntityHealthComponent, Player } from '@minecraft/server'
-import { color } from '@mcbe-mods/utils'
+import { color, calcGameTicks } from '@mcbe-mods/utils'
 
 const PH = 'Hit Point'
 
@@ -31,10 +32,11 @@ system.runInterval(() => {
   world.getAllPlayers().forEach((player) => {
     const entities = player.getEntitiesFromViewDirection()
     entities.forEach((entityRaycastHit) => {
-      showHealth(player, entityRaycastHit.entity)
+      const entity = backwardsCompatible(entityRaycastHit, ['entity'], entityRaycastHit) as Entity
+      showHealth(player, entity)
     })
   })
-})
+}, calcGameTicks(500))
 
 world.afterEvents.entityHurt.subscribe((e) => {
   showHealth(e.damageSource.damagingEntity as Player, e.hurtEntity)
@@ -49,18 +51,17 @@ function showHealth(player: Player, entity: Entity) {
   try {
     const health = entity.getComponent('health') as EntityHealthComponent
 
-    if (!health?.effectiveMax) return
+    if (health && backwardsCompatible(health, ['effectiveMax', 'value'])) {
+      const maxHealth = Math.floor(backwardsCompatible(health, ['effectiveMax', 'value']) as number)
 
-    /** @type {number} */
-    const maxHealth = Math.floor(health.effectiveMax)
-    /** @type {number} */
-    const currentHealth = Math.floor(health.currentValue)
+      const currentHealth = Math.floor(backwardsCompatible(health, ['currentValue', 'current']) as number)
 
-    const togglePHType = player.getDynamicProperty(PH)
-    const PHNumber = `${color.green(maxHealth + '')}${color.reset('')} / ${color.red(currentHealth + '')}`
-    const PHBar = togglePHType ? PHNumber : getHeartBar(maxHealth, currentHealth)
+      const togglePHType = player.getDynamicProperty(PH)
+      const PHNumber = `${color.green(maxHealth + '')}${color.reset('')} / ${color.red(currentHealth + '')}`
+      const PHBar = togglePHType ? PHNumber : getHeartBar(maxHealth, currentHealth)
 
-    player.onScreenDisplay.setActionBar(maxHealth > 100 ? PHNumber : PHBar)
+      player.onScreenDisplay.setActionBar(maxHealth > 100 ? PHNumber : PHBar)
+    }
   } catch (error) {
     /* eslint-disable no-console , @typescript-eslint/no-explicit-any*/
     console.log(error)
@@ -103,4 +104,17 @@ function getHeartBar(maxHealth: number, currentHealth: number) {
   }
   const reg = new RegExp(`${color.darkGray('')}$`)
   return result.replace(reg, '').trim()
+}
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function backwardsCompatible<T extends Record<string, any>>(
+  obj: T,
+  keys: string[],
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  defaultValue?: any
+): T[keyof T] | undefined {
+  for (const key of keys) {
+    if (key in obj) return obj[key]
+  }
+  return defaultValue
 }
