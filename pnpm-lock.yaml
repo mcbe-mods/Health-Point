@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@mcbe-mods/utils':
     specifier: ^0.0.3
@@ -7,8 +11,8 @@ dependencies:
 
 devDependencies:
   '@minecraft/server':
-    specifier: 1.4.0-beta.1.20.10-stable
-    version: 1.4.0-beta.1.20.10-stable
+    specifier: 1.11.0
+    version: 1.11.0
   '@rollup/plugin-node-resolve':
     specifier: ^15.1.0
     version: 15.1.0(rollup@3.27.0)
@@ -123,8 +127,14 @@ packages:
     resolution: {integrity: sha512-YRlHla64vel/kKLaG3do00tAxgV6uorHRPm2zgDSWXB4+VyQJdYYaeuJ5j+IYEvrtsGNTJEN+olzW25EqZT9bg==}
     dev: false
 
-  /@minecraft/server@1.4.0-beta.1.20.10-stable:
-    resolution: {integrity: sha512-GFxR3rc83fLG4G1QV51D6a7V1EylomZrUMO1oUNINhkMpNBe2ACA9CBpLpkixxg0Y3aDpUnTkuhjQpoMnekPSA==}
+  /@minecraft/common@1.2.0:
+    resolution: {integrity: sha512-JdmEq4P3Z/FtoBzhLijFgMSVFnFRrUoLwY8DHHrgtFo0mfLTOLTB1RErYjLMsA6b7BGVNxkX/pfFRiH7QZ0XwQ==}
+    dev: true
+
+  /@minecraft/server@1.11.0:
+    resolution: {integrity: sha512-sVTKkAR7fgcgRrBrl+QiqlwiL07JTCSRbwSLpkmsPDvgfhH4bQsdPXC8fWZGRxwKikC4/oBxGq5j6pJp87yF6Q==}
+    dependencies:
+      '@minecraft/common': 1.2.0
     dev: true
 
   /@nodelib/fs.scandir@2.1.5:

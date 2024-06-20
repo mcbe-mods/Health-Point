@@ -6,27 +6,8 @@
  * @license GPL-2.0
  */
 
-import { world, system, DynamicPropertiesDefinition, MinecraftEntityTypes, Entity } from '@minecraft/server'
-import type { EntityHealthComponent, Player } from '@minecraft/server'
+import { world, system, Entity, EntityHealthComponent, Player } from '@minecraft/server'
 import { color, calcGameTicks } from '@mcbe-mods/utils'
-
-const PH = 'Hit Point'
-
-world.afterEvents.worldInitialize.subscribe((e) => {
-  const dpd = new DynamicPropertiesDefinition()
-  dpd.defineBoolean(PH)
-  e.propertyRegistry.registerEntityTypeDynamicProperties(dpd, MinecraftEntityTypes.player)
-})
-
-world.beforeEvents.chatSend.subscribe(async (e) => {
-  const msg = e.message
-  if (/#PH#/i.test(msg)) {
-    e.cancel = true
-    const player = e.sender
-    const ph = player.getDynamicProperty(PH)
-    player.setDynamicProperty(PH, !ph)
-  }
-})
 
 system.runInterval(() => {
   world.getAllPlayers().forEach((player) => {
@@ -56,11 +37,8 @@ function showHealth(player: Player, entity: Entity) {
 
       const currentHealth = Math.floor(backwardsCompatible(health, ['currentValue', 'current']) as number)
 
-      const togglePHType = player.getDynamicProperty(PH)
       const PHNumber = `${color.green(maxHealth + '')}${color.reset('')} / ${color.red(currentHealth + '')}`
-      const PHBar = togglePHType ? PHNumber : getHeartBar(maxHealth, currentHealth)
-
-      player.onScreenDisplay.setActionBar(maxHealth > 100 ? PHNumber : PHBar)
+      player.onScreenDisplay.setActionBar(maxHealth > 100 ? PHNumber : getHeartBar(maxHealth, currentHealth))
     }
   } catch (error) {
     /* eslint-disable no-console , @typescript-eslint/no-explicit-any*/
